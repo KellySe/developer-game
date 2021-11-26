@@ -1,9 +1,9 @@
-﻿using DeveloperGame.ConsoleApp.GameLibrary;
+﻿using GameLogic.Games;
 using System;
 
 namespace DeveloperGame.ConsoleApp
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
@@ -12,10 +12,11 @@ namespace DeveloperGame.ConsoleApp
             var name = Console.ReadLine();
             Console.Clear();
 
-            IGame game = null;
 
-            while (game == null)
+            // Loop infinitely (the only way to exit the loop is to select the "Quit" menu option)
+            while (true)
             {
+                IGameLogic gameLogic = null;
                 Console.Clear();
                 Console.WriteLine($"Hello {name}! Which game do you want to play?");
                 Console.WriteLine("1. Simple Number Guessing Game");
@@ -29,27 +30,21 @@ namespace DeveloperGame.ConsoleApp
                     switch (option[0])
                     {
                         case '1':
-                            game = new SimpleNumberGuessingGame();
+                            // This is an example of polymorphism - "gameLogic" is a "IGameLogic" type
+                            // but we are assigning a "SimpleNumberGuessingGameLogic" object to it.
+                            gameLogic = new SimpleNumberGuessingGameLogic();
                             break;
                         case '2':
-                            game = new EvenSimplerGame();
+                            gameLogic = new EvenSimplerGameLogic();
                             break;
                         case 'q':
                             return;
                     }
                 }
+
+                var runner = new ConsoleGameService(gameLogic);
+                runner.RunGame();
             }
-
-            Console.Clear();
-            Console.WriteLine(game.GameDescription());
-
-            do {
-                game.SetupGame();
-                game.PlayGame();
-                game.EndGame();
-            } while (game.PlayAgain());
         }
-
-
     }
 }
