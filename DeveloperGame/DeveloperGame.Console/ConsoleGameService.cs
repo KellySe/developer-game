@@ -48,7 +48,7 @@ namespace DeveloperGame.ConsoleApp
             return false;
         }
 
-        public bool CheckPlayAgain(string entry)
+        private bool CheckPlayAgain(string entry)
         {
             switch (entry.ToLower())
             {
