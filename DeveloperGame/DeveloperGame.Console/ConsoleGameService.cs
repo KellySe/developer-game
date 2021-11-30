@@ -1,7 +1,5 @@
 ﻿using GameLogic.Games;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DeveloperGame.ConsoleApp
 {
@@ -19,52 +17,47 @@ namespace DeveloperGame.ConsoleApp
             Console.Clear();
 
             do {
-                Console.WriteLine(gameLogic.GetGameDescription());
-                Console.WriteLine();
-                ConfigureGame();
                 Play();
-                Console.Clear();
-                Console.WriteLine(gameLogic.EndGameText());
-            } while(CheckPlayAgain());
-        }
-
-        private void ConfigureGame()
-        {
-            foreach (var GameConfigurationItem in gameLogic.GetConfigurationItems())
-            {
-                while(!GameConfigurationItem.IsSet())
-                {
-                    Console.WriteLine(GameConfigurationItem.Prompt);
-                    GameConfigurationItem.SetConfiguration(Console.ReadLine());
-                    Console.Clear();
-                }
-            }
+            } while(PlayAgain());
         }
 
         private void Play()
         {
-            Console.Clear();
-
             while(!gameLogic.GameComplete)
             {
                 Console.Clear();
-                Console.WriteLine(gameLogic.RoundPrompt());
-                gameLogic.PlayRound(Console.ReadLine());
+                Console.WriteLine(gameLogic.GetNextPrompt());
+                gameLogic.HandlePlayerResponse(Console.ReadLine());
             }
+
+            Console.Clear();
+            Console.WriteLine(gameLogic.GetNextPrompt());
         }
 
-        private bool CheckPlayAgain()
+        private bool PlayAgain()
         {
             Console.WriteLine();
-            Console.WriteLine(gameLogic.PlayAgainPrompt());
+            Console.WriteLine("Do you want to play again? Y/N");
             
-            if(gameLogic.PlayAgainResult(Console.ReadLine()))
+            if(CheckPlayAgain(Console.ReadLine()))
             {
-                gameLogic.Reinitialise();
+                gameLogic.Initialise();
                 return true;
             }
 
             return false;
+        }
+
+        public bool CheckPlayAgain(string entry)
+        {
+            switch (entry.ToLower())
+            {
+                case "n":
+                case "no":
+                    return false;
+                default:
+                    return true;
+            }
         }
     }
 }

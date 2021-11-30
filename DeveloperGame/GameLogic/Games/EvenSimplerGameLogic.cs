@@ -8,58 +8,53 @@ namespace GameLogic.Games
     {
         public EvenSimplerGameLogic()
         {
-            Reinitialise();
+            Initialise();
         }
 
         public bool GameComplete { get; set; }
+        private bool GameStarted;
 
-        public void Reinitialise()
+        public void Initialise()
         {
             GameComplete = false;
+            GameStarted = false;
         }
 
-        public string GetGameDescription()
+        public string GetNextPrompt()
         {
-            return "This is going to be really simple!";
+            string prompt;
+
+            // Game hasn't started - display game introduction
+            if (!GameStarted)
+            {
+                prompt = $"This is going to be really simple!{Environment.NewLine}Press enter to play!";
+            }
+            // Game is over - congratulate player
+            else if (GameComplete)
+            {
+                prompt = "Well done! Although I'm not sure congraulations are really in order!";
+            }
+            // Standard game prompt.
+            else
+            {
+                prompt = "Type \"win\"";
+            }
+
+            return prompt;
         }
 
-        public IEnumerable<GameConfigurationItem> GetConfigurationItems()
+        public void HandlePlayerResponse(string entry)
         {
-            // This game needs no configuration so we return an empty list.
-            return new List<GameConfigurationItem>();
-        }
+            if (!GameStarted)
+            {
+                GameStarted = true;
+                return;
+            }
 
-        public string RoundPrompt()
-        {
-            return "Type \"win\"";
-        }
-
-        public void PlayRound(string entry)
-        {
             // If the user entered "win" the game is complete.
             GameComplete = string.Equals(entry, "win", StringComparison.OrdinalIgnoreCase);
         }
 
-        public string EndGameText()
-        {
-            return "Well done! Although I'm not sure congraulations are really in order!";
-        }
 
-        public string PlayAgainPrompt()
-        {
-            return "Do you want to play again? Y/N";
-        }
-
-        public bool PlayAgainResult(string entry)
-        {
-            switch (entry.ToLower())
-            {
-                case "n":
-                case "no":
-                    return false;
-                default:
-                    return true;
-            }
-        }
     }
 }

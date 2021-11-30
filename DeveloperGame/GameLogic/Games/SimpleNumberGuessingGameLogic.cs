@@ -1,54 +1,63 @@
-﻿using GameLogic.Games;
-using GameLogic.Models;
+﻿using GameLogic.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GameLogic.Games
 {
     public class SimpleNumberGuessingGameLogic : IGameLogic
     {
+        // Storing all our globals in a class as it makes it easier to reset the game. i.e. "State = new SimpleNumberGuessingGameState();" rather than resetting each property individually.
         private SimpleNumberGuessingGameState State;
+
+        // The value of this property depends on the value of the "GameComplete" property of "State"
+        public bool GameComplete { get => State.GameComplete; set => State.GameComplete = value; }
 
         public SimpleNumberGuessingGameLogic()
         {
-            Reinitialise();
+            Initialise();
         }
 
-        public bool GameComplete { get; set; }
-
-        public void Reinitialise()
+        public void Initialise()
         {
             State = new SimpleNumberGuessingGameState();
             GameComplete = false;
         }
 
-        public IEnumerable<GameConfigurationItem> GetConfigurationItems()
+        public string GetNextPrompt()
         {
-            return new List<GameConfigurationItem>
+            if (!State.GameStarted)
             {
-                new GameConfigurationItem
-                {
-                    Prompt = "Give me a max number to choose. The number must be greater than zero.",
-                    SetConfiguration = entry => {
-                        // if we can parse the entry into an integer and it is greater than zero
-                        // we consider the value to be valid and use it to set the mystery number
-                        if (int.TryParse(entry, out var max) && max > 0)
-                        {
-                            State.MysteryNumber = new Random().Next(1, max);
-                            State.MinGuess = 0;
-                            State.MaxGuess = max;
-                        }
-                    },
-                    // Consider the setting to be set if it is greater than zero.
-                    IsSet = () => State.MysteryNumber > 0
-                }
-            };
+                return $"I'm going to think of a number; you will have to guess what number I'm thinking of!{Environment.NewLine}Press enter to continue.";
+            }
+
+            if (!State.Configured)
+            {
+                return ConfigurationPrompt();
+            }
+
+            if (GameComplete)
+            {
+                return EndGameText();
+            }
+
+            return RoundPrompt();
         }
 
-        public string GetGameDescription()
+        public void HandlePlayerResponse(string entry)
         {
-            return "I'm going to think of a number; you will have to guess what number I'm thinking of!";
+            // Not worried about the actualy input here 
+            if (!State.GameStarted)
+            {
+                State.GameStarted = true;
+                return;
+            }
+
+            if (!State.Configured)
+            {
+                Configure(entry);
+                return;
+            }
+
+            PlayRound(entry);
         }
 
         public string RoundPrompt()
@@ -62,31 +71,26 @@ namespace GameLogic.Games
                 State.FirstRound = false;
             }
 
-            return $"{prompt}My number is between {State.MinGuess} and {State.MaxGuess}. You have {5 - State.Turns} guesses left." +
+            return $"{prompt}My number is between {State.RangeMinGuess} and {State.RangeMaxGuess}. You have {5 - State.Turns} guess(es) left." +
                 $"{Environment.NewLine}What is your guess?";
         }
 
         public void PlayRound(string entry)
         {
-            if(State.Turns > 5)
-            {
-                GameComplete = true;
-                return;
-            }
-
             int.TryParse(entry, out var guess);
             State.FinalGuess = guess;
 
             if (guess != State.MysteryNumber)
             {
-                if (guess < State.MysteryNumber && guess > State.MinGuess)
+                // Shrink the range that contains the number based on previous guesses
+                if (guess < State.MysteryNumber && guess > State.RangeMinGuess)
                 {
-                    State.MinGuess = guess;
+                    State.RangeMinGuess = guess;
                 }
 
-                if (guess > State.MysteryNumber && guess < State.MaxGuess)
+                if (guess > State.MysteryNumber && guess < State.RangeMaxGuess)
                 {
-                    State.MaxGuess = guess;
+                    State.RangeMaxGuess = guess;
                 }
             }
             else
@@ -104,8 +108,7 @@ namespace GameLogic.Games
 
         public string EndGameText()
         {
-            var salutation = string.Empty;
-
+            string salutation;
             if (State.FinalGuess == State.MysteryNumber)
             {
                 salutation = "Congatulations!";
@@ -115,24 +118,36 @@ namespace GameLogic.Games
                 salutation = "Bad Luck!";
             }
 
-            return$"{salutation}{Environment.NewLine}My number was {State.MysteryNumber} and your last guess was {State.FinalGuess}.";
+            return $"{salutation}{Environment.NewLine}My number was {State.MysteryNumber} and your last guess was {State.FinalGuess}.";
         }
 
-        public string PlayAgainPrompt()
+        public void Configure(string entry)
         {
-            return "Do you want to play again? Y/N";
-        }
-
-        public bool PlayAgainResult(string entry)
-        {
-            switch (entry.ToLower())
+            if (State.MysteryNumber <= 0)
             {
-                case "n":
-                case "no":
-                    return false;
-                default:
-                    return true;
+                // if we can parse the entry into an integer and it is greater than zero
+                // we consider the value to be valid and use it to set the mystery number
+                if (int.TryParse(entry, out var max) && max > 0)
+                {
+                    State.MysteryNumber = new Random().Next(1, max);
+                    State.RangeMinGuess = 0;
+                    State.RangeMaxGuess = max;
+                }
+
+                // Ensure we don't attempt to configure multiple items in one go (only actually necessary in situation where we have multiple configuration steps)
+                return;
             }
+        }
+
+        public string ConfigurationPrompt()
+        {
+            if (State.MysteryNumber <= 0)
+            {
+                return "Give me a max number to choose. The number must be greater than zero.";
+            }
+
+            // This function should not be run if mystery number is set appropriately.
+            throw new InvalidOperationException("If the game is properly configured this line should not be hit.");
         }
     }
 }
