@@ -21,6 +21,7 @@ namespace DeveloperGame.ConsoleApp
                 Console.WriteLine($"Hello {name}! Which game do you want to play?");
                 Console.WriteLine("1. Simple Number Guessing Game");
                 Console.WriteLine("2. Even Simpler Game");
+                Console.WriteLine("3. Rock Paper Scissors");
                 Console.WriteLine("Quit");
 
                 var option = Console.ReadLine().ToLower();
@@ -36,6 +37,9 @@ namespace DeveloperGame.ConsoleApp
                             break;
                         case '2':
                             gameLogic = new EvenSimplerGameLogic();
+                            break;
+                        case '3':
+                            gameLogic = new RockPaperScissorsGameLogic();
                             break;
                         case 'q':
                             return;
