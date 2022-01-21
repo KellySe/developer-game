@@ -1,9 +1,4 @@
-﻿using GameLogic.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GameLogic.Games
+﻿namespace GameLogic.Games
 {
     public interface IGameLogic
     {
