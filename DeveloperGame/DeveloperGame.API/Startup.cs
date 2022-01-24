@@ -57,7 +57,7 @@ namespace DeveloperGame.API
                 // specifying the Swagger JSON endpoint.
                 app.UseSwaggerUI(config =>
                 {
-                    config.SwaggerEndpoint("/swagger/v1/swagger.json", "Vehicle APIs");
+                    config.SwaggerEndpoint("/swagger/v1/swagger.json", "Developer Game APIs");
                     config.RoutePrefix = string.Empty;
                 });
             }
