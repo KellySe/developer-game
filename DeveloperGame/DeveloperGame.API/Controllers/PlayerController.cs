@@ -13,6 +13,7 @@ namespace DeveloperGame.API.Controllers
     /// Get player's achievements and scores for a specific game - consider what the route could be.
     /// Get player with their achievements.
     /// Add a score for a player in a particular game.
+    /// Add/list friends for a player (you will need to add a new fake DB table to <see cref="IDeveloperGameDb"/> to store this data)
     /// Anything else you can think of - challenge yourself.
     /// </summary>
     [ApiController]
