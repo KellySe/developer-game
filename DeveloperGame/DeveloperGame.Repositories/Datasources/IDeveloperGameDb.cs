@@ -10,5 +10,7 @@ namespace DeveloperGame.Repositories.Datasources
         List<Player> Players { get; set; }
         List<Achievement> Achievements { get; set; }
         List<PlayerAchievement> PlayerAchievements { get; set; }
+
+        void SaveChanges();
     }
 }

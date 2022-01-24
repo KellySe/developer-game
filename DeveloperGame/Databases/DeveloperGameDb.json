@@ -1,0 +1,39 @@
+{
+  "GameDetails": [
+    {
+      "Id": "d8438f2a-e229-4211-afc9-ca4c912eb827",
+      "Name": "Number Guessing Game",
+      "Description": "A game where the player has to guess the number chosen by the computer.",
+      "CreatedOn": "2021-11-26T00:00:00",
+      "CreatedBy": "John Cobley"
+    }
+  ],
+  "Scores": [
+    {
+      "Id": "549612e7-04f4-4974-81ff-58c12c49bc6d",
+      "GameId": "a94d1f2d-f50b-44db-a6df-297d1d3728a3",
+      "PlayerId": "568da951-22e4-432c-9b4b-71b1c804c8c7",
+      "ScoreValue": 5
+    }
+  ],
+  "Players": [
+    {
+      "Id": "db6752ce-461c-4df3-bb4c-3d1ceead3d26",
+      "Name": "John Cobley"
+    }
+  ],
+  "Achievements": [
+    {
+      "Id": "4037d185-8cc0-4838-9871-460280507a95",
+      "GameId": "a94d1f2d-f50b-44db-a6df-297d1d3728a3",
+      "Name": "Got it in One!",
+      "Description": "You guessed the number in one guess!"
+    }
+  ],
+  "PlayerAchievements": [
+    {
+      "AchievementId": "4b509db6-9735-4d0c-8f00-7dbcc7e18a6d",
+      "PlayerId": "568da951-22e4-432c-9b4b-71b1c804c8c7"
+    }
+  ]
+}

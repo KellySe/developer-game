@@ -7,11 +7,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeveloperGame.ConsoleApp", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameLogic", "GameLogic\GameLogic.csproj", "{E7AFAA5D-8DD3-463E-85E5-6CB7190CC920}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeveloperGame.Repositories", "DeveloperGame.Repositories\DeveloperGame.Repositories.csproj", "{C3C89BBC-7A87-4A30-A9F4-FBF07FF2F0CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeveloperGame.Repositories", "DeveloperGame.Repositories\DeveloperGame.Repositories.csproj", "{C3C89BBC-7A87-4A30-A9F4-FBF07FF2F0CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeveloperGame.Services", "DeveloperGame.Services\DeveloperGame.Services.csproj", "{F2EA0355-4E61-4EE3-942C-C82F163C1A6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeveloperGame.Services", "DeveloperGame.Services\DeveloperGame.Services.csproj", "{F2EA0355-4E61-4EE3-942C-C82F163C1A6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeveloperGame.API", "DeveloperGame.API\DeveloperGame.API.csproj", "{B6507879-781C-486F-B2AA-DBBCDCF16C85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeveloperGame.API", "DeveloperGame.API\DeveloperGame.API.csproj", "{B6507879-781C-486F-B2AA-DBBCDCF16C85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeveloperGameTests", "DeveloperGameTests\DeveloperGameTests.csproj", "{AAD6C993-2C5D-4DAC-9A57-D83AA450C315}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{532EE7C8-9A51-4CF9-B1F7-B7F733B25556}"
+	ProjectSection(SolutionItems) = preProject
+		Databases\DeveloperGameDb.json = Databases\DeveloperGameDb.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +46,10 @@ Global
 		{B6507879-781C-486F-B2AA-DBBCDCF16C85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6507879-781C-486F-B2AA-DBBCDCF16C85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6507879-781C-486F-B2AA-DBBCDCF16C85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAD6C993-2C5D-4DAC-9A57-D83AA450C315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAD6C993-2C5D-4DAC-9A57-D83AA450C315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAD6C993-2C5D-4DAC-9A57-D83AA450C315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAD6C993-2C5D-4DAC-9A57-D83AA450C315}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
