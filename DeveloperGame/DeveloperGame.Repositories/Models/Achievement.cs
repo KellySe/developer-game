@@ -9,12 +9,7 @@ namespace DeveloperGame.Repositories.Models
             Id = Guid.NewGuid();
         }
 
-        internal Achievement(Guid id)
-        {
-            Id = id;
-        }
-
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// The ID of the game that this achievemnet is linked to.

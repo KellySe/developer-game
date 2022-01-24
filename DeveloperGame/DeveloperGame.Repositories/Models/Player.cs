@@ -9,12 +9,7 @@ namespace DeveloperGame.Repositories.Models
             Id = Guid.NewGuid();
         }
 
-        internal Player(Guid id)
-        {
-            Id = id;
-        }
-
-        public Guid Id { get; private set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// The player's name.

@@ -1,4 +1,5 @@
-﻿using DeveloperGame.Services;
+﻿using DeveloperGame.Repositories.Datasources;
+using DeveloperGame.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -23,10 +24,16 @@ namespace DeveloperGame.API.Controllers
         private readonly ILogger<GameController> _logger;
         private readonly IGameService gameService;
 
-        public GameController(ILogger<GameController> logger, IGameService gameService)
+        public GameController(ILogger<GameController> logger, IGameService gameService, IDeveloperGameDb developerGameDb)
         {
             _logger = logger;
             this.gameService = gameService;
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok();
         }
     }
 }
